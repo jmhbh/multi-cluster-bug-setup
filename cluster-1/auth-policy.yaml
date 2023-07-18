@@ -1,0 +1,91 @@
+apiVersion: security.policy.gloo.solo.io/v2
+kind: ExtAuthPolicy
+metadata:
+  name: portal-api-route-auth
+  namespace: gloo-mesh-addons
+spec:
+  applyToRoutes:
+  - route:
+      labels:
+        usagePlans: dev-portal
+  config:
+    server:
+      name: ext-auth-server
+      namespace: gloo-mesh-addons
+    glooAuth:
+      configs:
+        - apiKeyAuth:
+            headerName: api-key
+            headersFromMetadataEntry:
+              x-solo-plan:
+                name: usagePlan
+                required: true
+
+
+#            k8sSecretApikeyStorage:
+#              labelSelector:
+#                extauth: apikey
+#
+#apiVersion: security.policy.gloo.solo.io/v2
+#kind: ExtAuthPolicy
+#metadata:
+#  name: portal-api-route-auth
+#  namespace: gloo-mesh-addons
+#spec:
+#  applyToRoutes:
+#    - route:
+#        labels:
+#          usagePlans: dev-portal
+#  config:
+#    server:
+#      name: ext-auth-server
+#      namespace: gloo-mesh-addons
+#      cluster: cluster-1
+#    glooAuth:
+#      configs:
+#        - oauth2:
+#            accessTokenValidation:
+#              jwt:
+#                localJwks:
+#                  inlineString: >-
+#                    {"keys":[{"kid":"lrXq9i8-qRjrMzsrHZAoq6nWg9GuU4jNZvqDH0fz0r8","kty":"RSA","alg":"RS256","use":"sig","n":"tvMkIR0lohdpjI-_JxPncR8U978FK02RciILwTCDK6uumgUq2Y9YOiJyf3Yk8XdzRsrODdEdzvwH2t5PIkz8EehxskhHBQL4V5lpWst3bfWytdblE7Mmc5n8wR8Slr7XDDMkJx9El4X5F1PEPyiyDdhQ_DFFYOB20zsSj7uSB_hinDsvedHFnqiUBUeEjkFg2Nu-LRs8mdqybD0gIl5o_hKbog9YhAWURqfZhsPVGFGeNvbn_na665PsHnBG7zNSnkzHBF3Aad7q7HiL7RMjcvLqMc_vDAFO1TGbb7R4ekiCf2aO_rHwBOn0-d1JBiKWFyDP--Od-sYNJ3rVlZJxjw","e":"AQAB","x5c":["MIICmzCCAYMCBgGJQeShHjANBgkqhkiG9w0BAQsFADARMQ8wDQYDVQQDDAZtYXN0ZXIwHhcNMjMwNzEwMjIxOTA5WhcNMzMwNzEwMjIyMDQ5WjARMQ8wDQYDVQQDDAZtYXN0ZXIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC28yQhHSWiF2mMj78nE+dxHxT3vwUrTZFyIgvBMIMrq66aBSrZj1g6InJ/diTxd3NGys4N0R3O/Afa3k8iTPwR6HGySEcFAvhXmWlay3dt9bK11uUTsyZzmfzBHxKWvtcMMyQnH0SXhfkXU8Q/KLIN2FD8MUVg4HbTOxKPu5IH+GKcOy950cWeqJQFR4SOQWDY274tGzyZ2rJsPSAiXmj+EpuiD1iEBZRGp9mGw9UYUZ429uf+drrrk+wecEbvM1KeTMcEXcBp3urseIvtEyNy8uoxz+8MAU7VMZtvtHh6SIJ/Zo7+sfAE6fT53UkGIpYXIM/74536xg0netWVknGPAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAKePrOGPyzckPctOmjpASwpg8lRclKhRfNllQAUbeP25Mv46a6rGib7grHq9tnytNHvf/Ynqf5a8PK7We86bl36q3Xr4VE+NcnypxIMwUP/cx+yOfzfvxND+ZUDcriOeY8CaH+e9DKkSnLip/R/7jVLSNP8DJwcrJfiFCyFUVKTzMCkD5Z9OvxtbTr6d/OvFohZZKuNv96af1AqgBLgBqrh2KS1g2xRVSY16wH6wBwKt1DHBMJfj5lHFDbOzY23FNXg+3VXeCcQAYbaNOIWQui5+3DB9RWqco0PO4YoAl8GxYsMZfGBqPzw6NyOVYXmsp4stLo60SBDrvy4R2KMEWtA="],"x5t":"K3Omw0p-iVD1VTXVqG-LPE2QzSk","x5t#S256":"lW-D0MZWeO7wkudaVZjGMPGet8Wh_FtQxY6jwo96T_M"}]}
+#apiVersion: security.policy.gloo.solo.io/v2
+#kind: ExtAuthPolicy
+#metadata:
+#  name: portal-api-route-auth
+#  namespace: gloo-mesh-addons
+#spec:
+#  applyToRoutes:
+#    - route:
+#        labels:
+#          usagePlans: dev-portal
+#  config:
+#    server:
+#      name: ext-auth-server
+#      namespace: gloo-mesh-addons
+#      cluster: cluster-1
+#    glooAuth:
+#      configs:
+#        - oauth2:
+#            oidcAuthorizationCode:
+#              appUrl: http://localhost:31080
+#              callbackPath: /
+#              clientId: 884f47d5-67e4-434e-8832-e732921118dc
+#              clientSecretRef:
+#                name: oauth
+#                namespace: gloo-mesh-addons
+#              issuerUrl: https://b4f5-205-154-255-179.ngrok-free.app/auth/realms/master/
+#              scopes:
+#                - email
+#              session:
+#                failOnFetchFailure: true
+#                cookie:
+#                  allowRefreshing: true
+#                cookieOptions:
+#                  notSecure: true
+#                  maxAge: 3600
+#              headers:
+#                idTokenHeader: id_token
+#              dynamicMetadataFromClaims:
+#                usagePlan: usagePlan
+#                userId: preferred_username

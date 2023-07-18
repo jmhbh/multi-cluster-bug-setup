@@ -1,0 +1,36 @@
+apiVersion: networking.gloo.solo.io/v2
+kind: RouteTable
+metadata:
+  name: tracks-rt
+  namespace: istio-gateway-ns
+  labels:
+    portal: dev-portal
+    api: tracks
+spec:
+  hosts:
+    - "*"
+  portalMetadata:
+    title: Catstronauts REST API V1
+    description: REST API for Catstronauts to retrieve data for tracks, authors and modules.
+    apiProductId: tracks-api-product
+    apiVersion: v1
+  http:
+    - name: tracks-api
+      labels:
+        usagePlans: dev-portal
+      matchers:
+        - uri:
+            prefix: /trackapi
+      forwardTo:
+        pathRewrite: /
+        destinations:
+          - ref:
+              name: tracks-rest-api
+              namespace: tracks
+              cluster: cluster-1
+            port:
+              number: 5000
+  virtualGateways:
+    - name: istio-ingressgateway
+      namespace: istio-gateway-ns
+      cluster: cluster-1

@@ -1,0 +1,36 @@
+apiVersion: networking.gloo.solo.io/v2
+kind: RouteTable
+metadata:
+  name: petstore-rt
+  namespace: petstore
+  labels:
+    portal: dev-portal
+    api: petstore
+spec:
+  hosts:
+    - "*"
+  portalMetadata:
+    title: PESTORE REST API V1
+    description: REST API for PESTORE to retrieve data for tracks, authors and modules.
+    apiProductId: pestore-rest-api
+    apiVersion: v1
+  http:
+    - name: petstore-api
+      labels:
+        usagePlans: dev-portal
+      matchers:
+        - uri:
+            prefix: /petstore
+      forwardTo:
+        pathRewrite: /
+        destinations:
+          - ref:
+              name: pets-rest-api
+              namespace: petstore
+              cluster: cluster-1
+            port:
+              number: 5000
+  virtualGateways:
+    - name: istio-ingressgateway
+      namespace: istio-gateway-ns
+      cluster: cluster-1

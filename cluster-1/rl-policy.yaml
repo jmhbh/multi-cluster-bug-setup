@@ -1,0 +1,25 @@
+apiVersion: trafficcontrol.policy.gloo.solo.io/v2
+kind: RateLimitPolicy
+metadata:
+  name: tracks-rate-limit
+  namespace: default
+spec:
+  applyToRoutes:
+  - route:
+      labels:
+        usagePlans: dev-portal
+  config:
+    ratelimitServerConfig:
+      name: usage-plans
+      namespace: gloo-mesh-addons
+      cluster:  cluster-1
+    ratelimitClientConfig:
+      name: usage-plans
+      namespace: gloo-mesh-addons
+      cluster:  cluster-1
+    serverSettings:
+      name: rl-server
+      namespace: gloo-mesh-addons
+    phase:
+      postAuthz:
+        priority: 2

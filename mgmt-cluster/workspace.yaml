@@ -1,0 +1,28 @@
+apiVersion: admin.gloo.solo.io/v2
+kind: Workspace
+metadata:
+  name: gloo-platform-multi-cluster-demo
+  namespace: gloo-mesh
+spec:
+  workloadClusters:
+    - name: cluster-1
+      namespaces:
+        - name: default
+        - name: istio-gateway-ns
+        - name: petstore
+        - name: tracks
+        - name: gloo-mesh-addons
+        - name: gloo-mesh
+        - name: portal-frontend
+    - name: mgmt-cluster
+      namespaces:
+        - name: gloo-mesh
+    - name: cluster-2
+      namespaces:
+        - name: default
+        - name: istio-gateway-ns
+        - name: petstore
+        - name: tracks
+        - name: gloo-mesh-addons
+        - name: gloo-mesh
+        - name: portal-frontend
