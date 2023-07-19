@@ -8,12 +8,12 @@ metadata:
     api: petstore
 spec:
   hosts:
-    - "api.petstore.com"
+    - "api.petstore-2.com"
   portalMetadata:
     title: PESTORE REST API V1
     description: REST API for PESTORE to retrieve data for tracks, authors and modules.
     apiProductId: pestore-rest-api
-    apiVersion: v1
+    apiVersion: v2
   http:
     - name: petstore-api
       labels:
@@ -32,4 +32,4 @@ spec:
   virtualGateways:
     - name: istio-ingressgateway
       namespace: istio-gateway-ns
-      cluster: cluster-1
+      cluster: cluster-2

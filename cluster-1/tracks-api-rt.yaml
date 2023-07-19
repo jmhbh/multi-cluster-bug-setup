@@ -8,7 +8,7 @@ metadata:
     api: tracks
 spec:
   hosts:
-    - "*"
+    - "api.tracks.com"
   portalMetadata:
     title: Catstronauts REST API V1
     description: REST API for Catstronauts to retrieve data for tracks, authors and modules.
@@ -27,7 +27,6 @@ spec:
           - ref:
               name: tracks-rest-api
               namespace: tracks
-              cluster: cluster-1
             port:
               number: 5000
   virtualGateways:

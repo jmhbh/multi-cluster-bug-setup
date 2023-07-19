@@ -5,19 +5,20 @@ metadata:
   namespace: istio-gateway-ns
 spec:
   listeners:
-    - allowedRouteTables:
-        - host: "*"
-      http: {}
-      port:
-        number: 443
-      tls:
-        mode: SIMPLE
-        secretName: test-secret
-#    - http: {}
-#      port:
-#        number: 80
-#      allowedRouteTables:
+#    - allowedRouteTables:
 #        - host: "*"
+#      http: {}
+#      port:
+#        number: 443
+#      tls:
+#        mode: SIMPLE
+#        secretName: test-secret
+    - http: {}
+      port:
+        number: 80
+      allowedRouteTables:
+        - host: "api.petstore-2.com"
+        - host: "api.tracks-2.com"
   workloads:
     - selector:
         labels:
