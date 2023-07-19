@@ -2,7 +2,7 @@ apiVersion: networking.gloo.solo.io/v2
 kind: VirtualGateway
 metadata:
   name: istio-ingressgateway
-  namespace: istio-gateway-ns-2
+  namespace: istio-gateway-ns
 spec:
   listeners:
     - allowedRouteTables:
