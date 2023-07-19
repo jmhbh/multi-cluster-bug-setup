@@ -145,6 +145,53 @@ items:
       name: developer-portal
       namespace: gloo-mesh-addons
     public: true
+    usagePlans:
+      - description: A basic usage plan
+        displayName: Bronze Plan
+        extAuthPolicies:
+          - authConfigId: gloo-mesh-addons.portal-api-route-auth-gloo-mesh-4ac7fcc4ee668717937d7fe76d8ea80
+            extAuthPolicyRef:
+              cluster: cluster-1
+              name: portal-api-route-auth
+              namespace: gloo-mesh-addons
+        name: bronze
+        rateLimitPolicy:
+          rateLimitPolicyRef:
+            cluster: cluster-1
+            name: tracks-rate-limit
+            namespace: default
+          requestsPerUnit: 1
+          unit: MINUTE
+      - description: A better usage plan
+        extAuthPolicies:
+          - authConfigId: gloo-mesh-addons.portal-api-route-auth-gloo-mesh-4ac7fcc4ee668717937d7fe76d8ea80
+            extAuthPolicyRef:
+              cluster: cluster-1
+              name: portal-api-route-auth
+              namespace: gloo-mesh-addons
+        name: silver
+        rateLimitPolicy:
+          rateLimitPolicyRef:
+            cluster: cluster-1
+            name: tracks-rate-limit
+            namespace: default
+          requestsPerUnit: 3
+          unit: MINUTE
+      - description: The best usage plan!
+        extAuthPolicies:
+          - authConfigId: gloo-mesh-addons.portal-api-route-auth-gloo-mesh-4ac7fcc4ee668717937d7fe76d8ea80
+            extAuthPolicyRef:
+              cluster: cluster-1
+              name: portal-api-route-auth
+              namespace: gloo-mesh-addons
+        name: gold
+        rateLimitPolicy:
+          rateLimitPolicyRef:
+            cluster: cluster-1
+            name: tracks-rate-limit
+            namespace: default
+          requestsPerUnit: 5
+          unit: MINUTE
 - apiVersion: internal.gloo.solo.io/v2
   kind: PortalConfig
   metadata:
